@@ -1,3 +1,5 @@
+import * as readline from 'readline';
+
 interface Character {
     name: string;
     hp: number;
@@ -26,9 +28,25 @@ class Player implements Character {
         this.hp -= amount;
     }
 }
-function battle(player1: Player, player2: Player): void {
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function askQuestion(query: string): Promise<string> { 
+    return new Promise(resolve => rl.question(query, resolve));
+}
+
+async function battle(player1: Character, player2: Character): Promise<void> {
+
+    const choice = await askQuestion('Choose your character WaterAvatar or FireAvatar (w/f): ')
     while (player1.isAlive() && player2.isAlive()) {
-        player1.attackTarget(player2);
+        if (choice.toLowerCase() == 'w') {
+            playerOne.attackTarget(playerTwo);
+        } else if (choice.toLowerCase() == 'f') {
+            playerTwo.attackTarget(playerOne)
+        }
     }
 }
 
